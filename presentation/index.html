@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Cross-site Scripting</h2>
+					<img src="./assets/Intro.jpeg" alt="intro">
+				</section>
+				<section>
+					<h2>What is XSS?</h2>
+					<img src="./assets/XSS intro.jpg" alt="xss-intro">
+				</section>
+				<section>
+					<section>
+						<h2>How does XSS work?</h2>
+						<img src="./assets/XSS-diagram.png" alt="XSS-diagram">
+					</section>
+					<section>
+						<pre><code data-trim data-noescape>
+							&ltscript&gt
+								alert('Hello world!');
+							&lt/script&gt
+
+							&ltstyle&gt
+								body {
+									margin: 0 auto;
+								}
+							&lt/style&gt
+								</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Injected JavaScript code can:</h2>
+					</section>
+					<section>
+						<p>Make changes to the appearance of the page</p>
+						<img src="./assets/JS-apperance.jpg" alt="apperance">
+					</section>
+					<section>
+						<p>Get access to the cookies of this site</p>
+						<img src="./assets/JS-cookies.jpg" alt="cookies">
+					</section>
+					<section>
+						<p>Get access to the clipboard</p>
+						<img src="./assets/clipboard.jpeg" alt="clipboard">
+					</section>
+					<section>
+						<p>Run JavaScript programs such as keylogger</p>
+						<img src="./assets/keylogger.png" alt="keylogger">
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>What are the types of Cross-site Scripting?</h2>
+					</section>
+					<section>
+						<p>Permanent (stored)</p>
+						<img src="./assets/XSS-Permanent.jpeg" alt="Permanent-XSS">
+					</section>
+					<section>
+						<p>Non-permanent (reflected)</p>
+						<img src="./assets/XSSNon-permanent.svg" alt="Non-permanent-XSS">
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Examples of XSS attacks</h2>
+					</section>
+					<section>
+						<h2>Our sandbox</h2>
+						<img src="./assets/Test-site.PNG" alt="Test-site">
+					</section>
+					<section>
+						<h2>search string</h2>
+						<img src="./assets/Search-string.PNG" alt="Search-string">
+					</section>
+					<section>
+						<img src="./assets/Search-true.PNG" alt="Search-true">
+						<p><br>Nothing was found for the query 'our text' :(</p>
+						<img src="./assets/Search-false.PNG" alt="Search-false">
+					</section>
+					<section>
+						<h3>Try with search string</h3>
+						<pre><code data-trim data-noescape>
+							&ltscript>
+								alert(‘You are broken!’)
+							&lt/script>
+						</code></pre>
+						<img src="./assets/First-try.PNG" alt="First-try">
+					</section>
+					<section>
+						<h2>Try with URL</h2>
+						<img src="./assets/Second-try.PNG" alt="Second-try">
+
+						<h2><br>Result:</h2>
+						<img src="./assets/ResultTest.PNG" alt="ResultTest">
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Website protection methods</h2>
+						<img src="./assets/Protection.png" alt="Protection">
+					</section>
+					<section>
+						<h3>IE 8</h3>
+						<pre><code data-trim data-noescape>
+							toStaticHTML()
+						</code></pre>
+						<h3><br>HTML5 standart</h3>
+						<pre><code data-trim data-noescape>
+							&ltiframe sandbox>
+								...
+							&lt/iframe>
+						</code></pre>
+					</section>
+					<section>
+						<h3>Ways to avoid some of the defenses</h3>
+						<p>tag in tag</p>
+						<pre><code data-trim data-noescape>
+							&lt/script>&ltscript>alert("You are broken!")&lt/script>
+						</code></pre>
+						<p><br>changing case</p>
+						<pre><code data-trim data-noescape>
+							&ltScRiPt>alert("You are broken!")&lt/sCrIpT>
+						</code></pre>
+						<p><br>Hexadecimal encoding</p>
+						<pre><code data-trim data-noescape>
+							%253script%253ealert(/You are broken!/)%253c/script%253e
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<h1>Conclusion</h1>
+					<img src="./assets/Finish.png" alt="last-slide">
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
